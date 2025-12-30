@@ -7,15 +7,19 @@ pipeline {
                 docker { image 'python:3.9-alpine' }
             }
             steps {
-                sh 'python --version'
-                echo 'Python container içindeyiz, testler başlıyor...'
+                echo '📦 Gerekli paketler yükleniyor...'
+                sh 'pip install unittest-xml-reporting'
                 
-                sh 'python -m unittest discover'
+                echo '🚀 Testler XML Raporu üretecek şekilde başlatılıyor...'
+                sh 'python -m xmlrunner discover -o test-reports'
             }
         }
     }
     
     post {
+        always {
+            junit 'test-reports/*.xml'
+        }
         success {
             echo '✅ Harika! Kodların sorunsuz çalışıyor.'
         }
