@@ -13,9 +13,6 @@ pipeline {
                 echo '🚀 Testler XML Raporu üretecek şekilde başlatılıyor...'
                 sh 'python -m xmlrunner discover -o test-reports'
             }
-        }
-    }
-    
     post {
         always {
             junit 'test-reports/*.xml'
@@ -26,5 +23,8 @@ pipeline {
         failure {
             echo '❌ Hata! Kodlarında bir bozukluk var.'
         }
+    }
+        }
+    
     }
 }
